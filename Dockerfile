@@ -20,4 +20,4 @@ WORKDIR / EXTRACTOR
 COPY start.sh /start.sh
 
 # Running MessageSearchBot
-CMD ["sh", "-c", "gunicorn app:app & python3 main.py"]
+CMD ["/bin/bash", "/start.sh"]
