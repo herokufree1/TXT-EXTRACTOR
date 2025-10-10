@@ -10,14 +10,13 @@ RUN apt update && apt upgrade -y && \
 RUN pip3 install --upgrade pip setuptools wheel cython
 
 # Copying Requirements
-COPY requirements.txt /requirements.txt
+COPY requirements.txt 
 
 # Installing Requirements
-RUN pip3 install -U -r requirements.txt
-
+RUN pip install --no-cache-dir -r requirements.txt
 RUN mkdir /EXTRACTOR
 WORKDIR /EXTRACTOR
-COPY start.sh /start.sh
+COPY start.sh 
 
 # Running MessageSearchBot
 CMD ["/bin/bash", "/start.sh"]
