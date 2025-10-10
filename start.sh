@@ -1,6 +1,10 @@
-echo "Cloning Repo..."
-git clone https://github.com/Popeye68/TXT-EXTRACTOR
-cd /TXT-EXTRACTOR
-pip install -r requirements.txt
+#!/bin/bash
 echo "Starting Bot..."
-python -m Extractor
+
+# Go to app folder (if repo name is TXT-EXTRACTOR)
+cd TXT-EXTRACTOR || cd /app || exit
+
+pip install -U -r requirements.txt
+
+python3 main.py
+
