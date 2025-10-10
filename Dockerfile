@@ -1,22 +1,21 @@
-# Python Based Docker
-FROM python:3.12-slim
+# Use a lightweight base image
+FROM python:3.11-alpine
 
-# Installing Packages
-RUN apt update && apt upgrade -y && \
-    apt install -y git curl python3-pip ffmpeg aria2 build-essential python3-dev && \
-    rm -rf /var/lib/apt/lists/*
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-# Updating Pip Packages
-RUN pip3 install --upgrade pip setuptools wheel cython
+# Set working directory
+WORKDIR /app
 
-# Copying Requirements
-COPY requirements.txt 
+# Copy the requirements file
+COPY requirements.txt .
 
-# Installing Requirements
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-RUN mkdir /EXTRACTOR
-WORKDIR /EXTRACTOR
-COPY start.sh 
 
-# Running MessageSearchBot
-CMD ["/bin/bash", "/start.sh"]
+# Copy the rest of your application code
+COPY . .
+
+# Command to run Gunicorn for the Flask app and the Extractor
+CMD ["sh", "-c", "gunicorn app:app -b 0.0.0.0:8000 & python3 -m Extractor"]
